@@ -4,7 +4,7 @@ MAINTAINER Pierre Klink <dev@klink.xyz>
 ENV MD_MYSQL_HOST mysql
 ENV MD_MYSQL_USERNAME root
 ENV MD_MYSQL_PASSWORD password
-ENV MD_MYSQL_DATABASE machdas
+ENV MD_MYSQL_DATABASE behance
 
 COPY ./ /var/www/
 
@@ -27,7 +27,7 @@ RUN cp config.sample.php config.php \
     && sed -i "s/'127.0.0.1'/getenv('MD_MYSQL_HOST')/g" config.php \
     && sed -i "s/'root'/getenv('MD_MYSQL_USERNAME')/g" config.php \
     && sed -i "s/'secret'/getenv('MD_MYSQL_PASSWORD')/g" config.php \
-    && sed -i "s/'machdas'/getenv('MD_MYSQL_DATABASE')/g" config.php \
+    && sed -i "s/'behance'/getenv('MD_MYSQL_DATABASE')/g" config.php \
     && apt-get remove -y nodejs build-essential git unzip \
     && apt-get clean
 

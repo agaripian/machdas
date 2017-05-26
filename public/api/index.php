@@ -6,11 +6,15 @@ require __DIR__ . '/../../vendor/autoload.php';
 // load config
 $config = require __DIR__ . '/../../config.php';
 
+//require_once('./../../backend/Behance/Middleware/TokenAuth.php');
+
 // create DI-container
 $container = new \Slim\Container([
     'settings' => [
-        'displayErrorDetails' => $config['debugging'],
-        'db'                  => $config['db']
+        'displayErrorDetails'               => $config['debugging'],
+        'db'                                => $config['db'],
+        'determineRouteBeforeAppMiddleware' => true
+
     ]
 ]);
 
@@ -66,24 +70,19 @@ $container['errorHandler'] = function ($container) {
 // create app
 $app = new \Slim\App($container);
 
+$app->add(new \Behance\Middleware\TokenAuth($app));
+
 // routing
-$app->group('/cards', function () {
+$app->group('/user', function () {
     /* @var \Slim\App $this */
-    $this->post('', \Machdas\Action\Card\Create::class);
-    $this->post('/{id:\d+}/tasks', \Machdas\Action\Card\CreateTask::class);
-    $this->get('', \Machdas\Action\Card\GetAll::class);
-    $this->get('/{id:\d+}', \Machdas\Action\Card\GetOne::class);
-    $this->get('/{id:\d+}/tasks', \Machdas\Action\Card\GetAllTasks::class);
-    $this->put('/{id:\d+}', \Machdas\Action\Card\Update::class);
-    $this->delete('/{id:\d+}', \Machdas\Action\Card\Delete::class);
-    $this->get('/tasks/count', \Machdas\Action\Card\CountTasks::class);
+    $this->post('/{id:\d+}/addimage', new \Behance\Action\User\AddImage($this));
+    $this->get('/{id:\d+}/getallimages', new \Behance\Action\User\GetAllImages($this));
 });
 
-$app->group('/tasks', function () {
+$app->group('/auth', function () {
     /* @var \Slim\App $this */
-    $this->get('/{id:\d+}', \Machdas\Action\Task\GetOne::class);
-    $this->put('/{id:\d+}', \Machdas\Action\Task\Update::class);
-    $this->delete('/{id:\d+}', \Machdas\Action\Task\Delete::class);
+    $this->post('/login', \Behance\Action\Auth\Login::class);
+    $this->post('/signup', \Behance\Action\User\Create::class);
 });
 
 // initialize eloquent

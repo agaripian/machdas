@@ -9,7 +9,7 @@ install:
   - sed -i 's/root/travis/g' codeception.yml
   - sed -i "s/'password'//g" codeception.yml
   - composer install --dev
-  - mysql -e 'CREATE DATABASE machdas;'
+  - mysql -e 'CREATE DATABASE behance;'
   - php vendor/bin/phinx migrate -e dev
   - php vendor/bin/codecept build
   - php -S localhost:9000 -t ./public &

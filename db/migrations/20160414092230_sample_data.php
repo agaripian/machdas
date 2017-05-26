@@ -6,38 +6,39 @@ class SampleData extends AbstractMigration
 {
     public function up()
     {
-        $cards = [
-            ['name' => 'First Card']
-        ];
-
-        $tasks = [
+        $users = [
             [
-                'name' => 'add a new card',
-                'isDone' => false,
-                'priority' => 900,
-                'cardId' => 1,
-            ],
-            [
-                'name' => 'add some tasks to the new card',
-                'isDone' => false,
-                'priority' => 500,
-                'cardId' => 1,
-            ],
-            [
-                'name' => 'comple all tasks of the new card',
-                'isDone' => false,
-                'priority' => 100,
-                'cardId' => 1,
+                'email'      => 'bob@bob.com',
+                'password'   => 'bob',
+                'first_name' => 'Bob',
+                'last_name'  => 'Smith',
+                'token'      => '',
             ]
         ];
 
-        $this->table('cards')->insert($cards)->save();
-        $this->table('tasks')->insert($tasks)->save();
+        $images = [
+            [
+                'url' => 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/a3a2cf47122431.587108a34d3f8.jpg',
+                'name' => 'sun',
+                'description' => 'Bright Sun',
+                'userid' => 1,
+            ],
+
+            [
+                'url' => 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/6f963e52031945.590201b690882.jpg',
+                'name' => 'Phone',
+                'description' => 'Phone Flame Burner',
+                'userid' => 1,
+            ]
+        ];
+
+        $this->table('users')->insert($users)->save();
+        $this->table('images')->insert($images)->save();
     }
 
     public function down()
     {
-        $this->execute('DELETE FROM tasks');
-        $this->execute('DELETE FROM cards');
+        $this->execute('DELETE FROM users');
+        $this->execute('DELETE FROM images');
     }
 }

@@ -9,7 +9,7 @@ return [
     ],
     'environments' => [
         'default_migration_table' => 'phinxlog',
-        'default_database'        => 'machdas',
+        'default_database'        => 'behance',
         'dev' => [
             'adapter' => $config['db']['driver'],
             'host'    => $config['db']['host'],

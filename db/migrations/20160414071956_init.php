@@ -27,16 +27,20 @@ class Init extends AbstractMigration
      */
     public function change()
     {
-        $this->table('cards')
-            ->addColumn('name', 'string')
+        $this->table('users')
+            ->addColumn('email', 'string')
+            ->addColumn('password', 'string')
+            ->addColumn('first_name', 'string')
+            ->addColumn('last_name', 'string')
+            ->addColumn('token', 'string')
             ->create();
 
-        $this->table('tasks')
+        $this->table('images')
+            ->addColumn('url', 'string')
             ->addColumn('name', 'string')
-            ->addColumn('isDone', 'boolean', ['default' => false])
-            ->addColumn('priority', 'integer', ['default' => 500])
-            ->addColumn('cardId', 'integer')
-            ->addForeignKey('cardId', 'cards', 'id')
+            ->addColumn('description', 'string')
+            ->addColumn('userid', 'integer')
+            ->addForeignKey('userid', 'users', 'id')
             ->addIndex(['name'])
             ->create();
     }
